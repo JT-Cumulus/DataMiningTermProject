@@ -1,0 +1,107 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+```{r}
+df = read_csv('/Users/axel/Downloads/music_video_topics50.csv')
+```
+
+```{r}
+ggplot(df, aes(x=scene_count)) +
+  geom_density() +
+  facet_wrap(~genre)
+```
+
+```{r}
+ggplot(df, aes(x=sat_mean)) +
+  geom_density() +
+  facet_wrap(~genre)
+```
+```{r}
+ggplot(df, aes(x=light_mean)) +
+  geom_density() +
+  facet_wrap(~genre) +
+  xlab('Mean Shot Lightness') +
+  ylab('Probability density')
+```
+```{r}
+ggplot(df, aes(x=lighting_met)) +
+  geom_histogram() +
+  facet_wrap(~genre)
+```
+
+```{r}
+ggplot(df, aes(x=colness)) +
+  geom_density() +
+  facet_wrap(~genre) +
+  xlab('Colourfulness') +
+  ylab('Probability density') +
+  xlim(c(1,80))
+```
+
+```{r}
+ggplot(df, aes(x=colness)) +
+  geom_density()
+```
+
+```{r}
+ggplot(df, aes(x=mot_int_mean)) +
+  geom_density() +
+  facet_wrap(~genre) +
+  xlab('Motion intensity') +
+  ylab('Probability density')
+```
+```{r}
+ggplot(df, aes(x=mot_int_std)) +
+  geom_density() +
+  facet_wrap(~genre)
+```
+```{r}
+summary(model)
+```
+```{r}
+library(AER)
+coeftest(model)
+```
+
+```{r}
+library(afex)
+set_sum_contrasts() # use sum coding, necessary to make type III LR tests valid
+library(car)
+```
+```{r}
+Anova(model,type="III")
+```
+```{r}
+summary(df)
+```
+
+```{r}
+for (i in 24:ncol(df) ){
+  print(ggplot(df, aes(x=mot_int_mean, y=unlist(df[ , i]))) +
+   geom_point() +
+    facet_wrap(~genre))
+  Sys.sleep(2)
+}
+```
+```{r}
+for (i in 24:ncol(df) ){
+  print(ggplot(df, aes(x=colness, y=unlist(df[ , i]))) +
+   geom_point() +
+    facet_wrap(~genre))
+  Sys.sleep(2)
+}
+```
+```{r}
+for (i in 25:ncol(df) ){
+  print(ggplot(df, aes(x=light_mean, y=unlist(df[ , i]))) +
+   geom_point() +
+    facet_wrap(~genre))
+  Sys.sleep(2)
+}
+```
+
